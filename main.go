@@ -23,8 +23,8 @@ var privateKey string
 func init() {
 	flag.IntVar(&port, "port", 8080, "port to listen on")
 	flag.StringVar(&target, "target", "", "target host")
-	flag.StringVar(&certificate, "certificate", "", "certificate file")
-	flag.StringVar(&privateKey, "key", "", "key file")
+	flag.StringVar(&certificate, "certificate", "certificate.crt", "certificate file")
+	flag.StringVar(&privateKey, "key", "private.key", "key file")
 }
 
 // main creates local http server, and forwards all requests to the target server
