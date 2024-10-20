@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup GO
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
       - name: Test and Build
         run: make all
       - name: Upload artifact
