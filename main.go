@@ -3,12 +3,14 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"crypto/x509"
 	"flag"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 type ForwardHandler struct {
@@ -100,5 +102,19 @@ func loadCertificate(certificate, privateKey string) tls.Certificate {
 		fmt.Printf("%+v\n", err.Error())
 		os.Exit(1)
 	}
+
+	x509cert, err := x509.ParseCertificate(cert.Certificate[0])
+	if err != nil {
+		fmt.Printf("%+v\n", err.Error())
+		os.Exit(1)
+	}
+
+	// Check if certificate is expired
+	if x509cert.NotAfter.Before(time.Now()) {
+		log.Printf("🔴 Certificate has expired %s\n", x509cert.NotAfter)
+	} else {
+		log.Printf("🟢 Certificate is valid until %s\n", x509cert.NotAfter)
+	}
+
 	return cert
 }
