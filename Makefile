@@ -18,7 +18,7 @@ darwin-arm64:; @ echo "$(YC) building for darwin..." ;
 	@ GOOS=darwin  GOARCH=arm64 go build -o bin/$(APP)-$@
 
 linux-amd64:; @ echo "$(YC) building for linux..." ;
-	@ GOOS=linux   GOARCH=amd64 go build -o bin/$(APP)-$@k
+	@ GOOS=linux   GOARCH=amd64 go build -o bin/$(APP)-$@
 
 windows-amd64:; @ echo "$(YC) building for windows..." ;
 	@ GOOS=windows GOARCH=amd64 go build -o bin/$(APP)-$@.exe

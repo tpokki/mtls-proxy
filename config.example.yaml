@@ -1,0 +1,40 @@
+# Example configuration.
+#
+# Every name here is arbitrary: the proxy does not care what the selector
+# header is called or what the clients are named. Both are yours to choose.
+
+# Address to bind. Defaults to 127.0.0.1:8080.
+#
+# The proxy holds usable client certificates, so it listens on the loopback
+# interface only. Change this only if you understand that it offers those
+# certificates to anyone able to reach the address.
+listen: 127.0.0.1:8080
+
+# Upstream host used by any client that does not override it.
+target: api.example.com
+
+selector:
+  # Request header carrying the name of the client to use. Omit it to have
+  # every request use the client named by "default" below.
+  header: X-Client-Name
+
+  # Client used when the header is absent or empty. Omit to reject such
+  # requests instead.
+  default: alpha
+
+  # Keep the selector header on the forwarded request. Defaults to false,
+  # since the header is normally proxy metadata that the upstream has no use
+  # for. Set to true when the upstream reads it too.
+  passthrough: false
+
+clients:
+  - name: alpha
+    cert: /path/to/alpha.crt
+    key: /path/to/alpha.key
+
+  - name: beta
+    cert: /path/to/beta.crt
+    key: /path/to/beta.key
+
+    # Optional: send this client's requests somewhere else.
+    target: other.example.com
